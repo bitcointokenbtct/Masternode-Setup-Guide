@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/bitcointokenbtct/Official-Images/master/github-header3.jpg">
+
 Bitcoin Token Masternode Setup Guide
 ==========================
 
