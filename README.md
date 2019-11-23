@@ -9,6 +9,16 @@ This guide is for a single masternode, on a Ubuntu 18.04 64-bit server (VPS) run
 
 You will need your masternode server details for progressing through this guide including the public IP address.
 
+### VPS Server Recommendations ###
+
+[Digital Ocean](https://www.digitalocean.com/products/droplets/)
+
+[Vultr](https://www.vultr.com/products/cloud-compute/#compute)
+
+**For either of the above VPS services, the economical $5 plan will be sufficient for your masternode.**
+
+---
+
 First the basic requirements:
 
 1. 10,000 BTCT
@@ -56,7 +66,7 @@ masternode outputs
 
 OS | Path to BTCT
 ------------ | -------------
-Windows | `%Appdata%/BTCT/`
+Windows | `%Appdata%/Roaming/BTCT/`
 macOS | `~/Library/Application\ Support/BTCT/`
 Linux | `~/.btct/`
 
@@ -80,7 +90,7 @@ Lastly, close the control wallet and open again to load the new configuration fi
 
 Install the latest version of the Bitcoin Token Core wallet onto your masternode. The latest version can be found here: [Bitcoin Token Core Releases](https://github.com/bitcointokenbtct/Bitcoin-Token-Core/releases).
 
-**Step 1:** Log in to your VPS:
+**Step 1:** Log in to your VPS via SSH:
 
 ```
 cd ~
@@ -100,22 +110,26 @@ Always check the releases page for the latest version and update the URL to refl
 tar -zxvf btct-x86_64-linux-gnu.tar.gz
 ```
 
-**Step 4:** Go to your Bitcoin Token bin directory:
+**Step 4:** Copy the files to the local bin. **Requires sudo**
 
 ```
-cd ~/btct/bin
+sudo cp -R btct/bin/* /usr/local/bin/
 ```
 
 **Step 5:** Note: If this is the first time running the wallet in the VPS, you’ll need to attempt to start the wallet:
 
 ```
-./btctd --daemon
+btctd --daemon
 ```
 
 **Step 6:** Stop the daemon after the blockchain downloads:
 
+You can verify you have the entire blockchain by comparing the results of `btct-cli getinfo` with the [BTCT Block Explorer](http://explorer.bitcointoken.pw)
+
+Once verified:
+
 ```
-./btct-cli stop
+btct-cli stop
 ```
 
 **Step 7:** Navigate to the btct data directory:
@@ -157,16 +171,13 @@ Ctr+x to exit and press Y to save changes and press enter to close
 
 ## Start the Masternode
 
-**Step 1:** Navigate back to the Bitcoin Token daemon location:
+**Step 1:** Navigate back to the Bitcoin Token VPS server:
 
-```
-cd ~/btct/bin
-```
 
 **Step 2:** Start the wallet daemon:
 
 ```
-./btctd
+btctd
 ```
 
 **Step 3:** From the Control wallet debug console:
@@ -193,13 +204,13 @@ Where "myalias" is the name of your masternode alias (without brackets)
 **Step 4:** Back in the VPS (remote wallet), start the masternode:
 
 ```
-./btct-cli startmasternode local false
+btct-cli startmasternode local false
 ```
 
 **Step 5:** Use the following command to check status:
 
 ```
-./btct-cli masternode status
+btct-cli masternode status
 ```
 
 You should see something like:
@@ -215,14 +226,14 @@ You should see something like:
 }
 ```
 
-If you see status Not capable masternode: Hot node, waiting for remote activation, you need to wait a bit longer for the blockchain to reach consensus. It's common to take 60 to 120 minutes before the activation can be done. You can also try restarting the VPS wallet and trying the startmasternode local false again.
+If you see status Not capable masternode: Hot node, waiting for remote activation, you need to wait a bit longer for the blockchain to reach consensus. It's possible it may take 60 to 120 minutes before the activation can be done. You can also try restarting the VPS wallet `btct-cli stop` and then `btctd` and trying the `btct-cli startmasternode local false` command again.
 
 Bitcoin Token Masternode Setup is Complete!
 
 
 ## Tearing down a Masternode
 
-1. `./btct-cli stop` from the masternode to stop the wallet.
+1. `btct-cli stop` from the masternode to stop the wallet.
 1. Then from your control wallet, edit your masternode.conf, delete the MN1 masternode line entry.
 1. Restart the control wallet.
 1. Your 10,000 BTCT will now be unlocked.
