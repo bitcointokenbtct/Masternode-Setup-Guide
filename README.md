@@ -99,7 +99,7 @@ cd ~
 **Step 2:** From your home directory, download the latest version from the BTCT GitHub repository:
 
 ```
-wget https://github.com/bitcointokenbtct/Bitcoin-Token-Core/releases/download/v1.0.1/btct-x86_64-linux-gnu.tar.gz
+wget https://github.com/bitcointokenbtct/Bitcoin-Token-Core/releases/download/v1.1/btct-x86_64-linux-gnu.tar.gz
 ```
 
 Always check the releases page for the latest version and update the URL to reflect the most current version.
