@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/bitcointokenbtct/Official-Images/master/github-header3.jpg">
 
-Bitcoin Token Masternode Setup Guide
+BitcoinToken Masternode Setup Guide
 ==========================
 
 ## Introduction
@@ -22,7 +22,7 @@ You will need your masternode server details for progressing through this guide 
 First the basic requirements:
 
 1. 10,000 BTCT
-1. A main computer (your everyday computer) – This will run the Bitcoin Token Core control wallet, hold your collateral 10,000 BTCT and can be opened and closed without affecting the masternode.
+1. A main computer (your everyday computer) – This will run the BitcoinToken Core control wallet, hold your collateral 10,000 BTCT and can be opened and closed without affecting the masternode.
 1. Masternode Server (VPS Suggested – The wallet daemon that will be on 24/7).
 1. A unique IP address for your VPS / Remote wallet.
 
@@ -76,19 +76,19 @@ Find the masternode.conf file, edit it in your favorite text editor and add the 
 <Name of Masternode(Use the name you entered earlier for simplicity)> <Unique VPS Public IP address>:42122 <The result of Step 1> <Result of Step 4> <The number after the long line in Step 4>
 ```
 
+Substitute with your own values and without the "<>"s.
+
 Example:
 
 ```
 MN1 34.24.122.10:42122 894FPpFdbr7sr6Si4fdsfssjjapuFzAXwEVCrpPJubnrmU6aKzh c8f4865da57a68d0e6ddd84324dfd28cfbe0c901015b973e7331bb8ce018716999 1
 ```
 
-Substitute with your own values and without the "<>"s.
-
 Lastly, close the control wallet and open again to load the new configuration file.
 
 ## VPS Remote Wallet Install
 
-Install the latest version of the Bitcoin Token Core wallet onto your masternode. The latest version can be found here: [Bitcoin Token Core Releases](https://github.com/bitcointokenbtct/Bitcoin-Token-Core/releases).
+Install the latest version of the BitcoinToken Core wallet onto your masternode. The latest version can be found here: [BitcoinToken Core Releases](https://github.com/bitcointokenbtct/Bitcoin-Token-Core/releases).
 
 **Step 1:** Log in to your VPS via SSH:
 
@@ -96,10 +96,10 @@ Install the latest version of the Bitcoin Token Core wallet onto your masternode
 cd ~
 ```
 
-**Step 2:** From your home directory, download the latest version from the BTCT GitHub repository:
+**Step 2:** From your home directory, download the latest version from the BitcoinToken GitHub repository:
 
 ```
-wget https://github.com/bitcointokenbtct/Bitcoin-Token-Core/releases/download/v1.1/btct-x86_64-linux-gnu.tar.gz
+wget https://github.com/bitcointokenbtct/Bitcoin-Token-Core/releases/download/v2.0/btct-16_04_x86_64-linux-gnu.tar.gz
 ```
 
 Always check the releases page for the latest version and update the URL to reflect the most current version.
@@ -107,7 +107,7 @@ Always check the releases page for the latest version and update the URL to refl
 **Step 3:** Unzip & Extract:
 
 ```
-tar -zxvf btct-x86_64-linux-gnu.tar.gz
+tar -zxvf btct-16_04_x86_64-linux-gnu.tar.gz
 ```
 
 **Step 4:** Copy the files to the local bin. **Requires sudo**
@@ -124,7 +124,7 @@ btctd --daemon
 
 **Step 6:** Stop the daemon after the blockchain downloads:
 
-You can verify you have the entire blockchain by comparing the results of `btct-cli getinfo` with the [BTCT Block Explorer](http://explorer.bitcointoken.pw)
+You can verify you have the entire blockchain by comparing the results of `btct-cli getinfo` with the [BitcoinToken Block Explorer](http://explorer.bitcointoken.website)
 
 Once verified:
 
@@ -144,7 +144,7 @@ cd ~/.btct
 nano btct.conf
 ```
 
-**Step 9:** Make the config look like this with your values:
+**Step 9:** Make the config look like this with your own values:
 
 ```
 rpcuser=long_random_username
@@ -156,7 +156,7 @@ logtimestamps=1
 maxconnections=256
 masternode=1
 externalip=Your VPS unique public ip address
-masternodeprivkey=Result of Step 1
+masternodeprivkey= [Result of **Step 1**]
 ```
 
 *Make sure to replace rpcuser and rpcpassword with your own.*
@@ -164,14 +164,14 @@ masternodeprivkey=Result of Step 1
 **Step 10:** Save and exit the file:
 
 ```
-Ctr+x to exit and press Y to save changes and press enter to close
+Ctl+x to exit and press 'Y' to save changes, then hit 'enter' to close
 ```
 
 **Please be sure to have port 42122 open on your server firewall if applicable for your control wallet to be able start the masternode remotely.**
 
 ## Start the Masternode
 
-**Step 1:** Navigate back to the Bitcoin Token VPS server:
+**Step 1:** Navigate back to your BitcoinToken VPS server:
 
 
 **Step 2:** Start the wallet daemon:
@@ -183,10 +183,10 @@ btctd
 **Step 3:** From the Control wallet debug console:
 
 ```
-startmasternode alias false myalias
+startmasternode alias false [my-alias]
 ```
 
-Where "myalias" is the name of your masternode alias (without brackets)
+Where "my-alias" is the name of your masternode alias (without brackets)
 
 **The following should appear.**
 
@@ -194,7 +194,7 @@ Where "myalias" is the name of your masternode alias (without brackets)
 "overall" : "Successfully started 1 masternodes, failed to start 0, total 1",
 "detail" : [
   {
-    "alias" : "<myalias>",
+    "alias" : "<my-alias>",
     "result" : "successful",
     "error" : ""
   }
@@ -226,14 +226,14 @@ You should see something like:
 }
 ```
 
-If you see status Not capable masternode: Hot node, waiting for remote activation, you need to wait a bit longer for the blockchain to reach consensus. It's possible it may take 60 to 120 minutes before the activation can be done. You can also try restarting the VPS wallet `btct-cli stop` and then `btctd` and trying the `btct-cli startmasternode local false` command again.
+If you see status "Not capable masternode: Hot node, waiting for remote activation", you need to wait a bit longer for the blockchain to reach consensus. It's possible it may take 60 to 120 minutes before the activation can be done. You can also try restarting the VPS wallet `btct-cli stop` and then `btctd` and trying the `btct-cli startmasternode local false` command again.
 
-Bitcoin Token Masternode Setup is Complete!
+BitcoinToken Masternode Setup is Complete!
 
 
 ## Tearing down a Masternode
 
 1. `btct-cli stop` from the masternode to stop the wallet.
-1. Then from your control wallet, edit your masternode.conf, delete the MN1 masternode line entry.
+1. Then from your control wallet, edit your 'masternode.conf', delete the 'MN1 masternode' line entry.
 1. Restart the control wallet.
 1. Your 10,000 BTCT will now be unlocked.
